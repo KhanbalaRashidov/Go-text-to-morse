@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Morse kodu tablosu
+// Morse code dictionary
 var morseCodeToText = map[string]string{
 	".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E", "..-.": "F",
 	"--.": "G", "....": "H", "..": "I", ".---": "J", "-.-": "K", ".-..": "L",
@@ -22,9 +22,9 @@ var morseCodeToText = map[string]string{
 	"...---...": "SOS",
 }
 
-// Morse kodunu metne çeviren fonksiyon
+// Decode Morse code to text
 func morseToText(morse string) string {
-	words := strings.Split(morse, "   ") // Kelimeler arası 7 boşluk
+	words := strings.Split(morse, "   ") // 7 spaces between words
 	var decodedWords []string
 
 	for _, word := range words {
@@ -40,7 +40,7 @@ func morseToText(morse string) string {
 	return strings.Join(decodedWords, " ")
 }
 
-// Bit dizisini Morse koduna çeviren fonksiyon
+// Convert bit string to Morse code
 func bitsToMorse(bits string) string {
 	bits = strings.Trim(bits, "0")
 	unitLength := findUnitLength(bits)
@@ -54,18 +54,18 @@ func bitsToMorse(bits string) string {
 	return bits
 }
 
-// Morse kodunu bit dizisine çeviren fonksiyon
+// Convert Morse code to bit string
 func morseToBits(morse string) string {
 	morse = strings.TrimSpace(morse)
-	morse = strings.ReplaceAll(morse, "   ", "0000000") // Kelimeler arası 7 boşluk
-	morse = strings.ReplaceAll(morse, " ", "000")       // Karakterler arası 3 boşluk
+	morse = strings.ReplaceAll(morse, "   ", "0000000") // 7 spaces between words
+	morse = strings.ReplaceAll(morse, " ", "000")       // 3 spaces between characters
 	morse = strings.ReplaceAll(morse, "-", "111")       // Dash
 	morse = strings.ReplaceAll(morse, ".", "1")         // Dot
 
 	return morse
 }
 
-// Bit dizisinde birim uzunluğunu bulma fonksiyonu
+// Find the length of the unit (1 or 0) in the bit string
 func findUnitLength(bits string) int {
 	ones := regexp.MustCompile(`1+`).FindAllString(bits, -1)
 	zeros := regexp.MustCompile(`0+`).FindAllString(bits, -1)
@@ -88,7 +88,7 @@ func findUnitLength(bits string) int {
 	return minLength
 }
 
-// Metni Morse koduna çeviren fonksiyon
+// Convert text to Morse code
 func textToMorse(text string) string {
 	var morseCode []string
 
@@ -108,9 +108,9 @@ func textToMorse(text string) string {
 	return strings.Join(morseCode, " ")
 }
 
-// Test fonksiyonları
+// Test functions
 func main() {
-	// Test bit dizisi
+	// Test bit string
 	bits := "1100110011001100000011000000111111001100111111001111110000000000000011001111110011111100111111000000110011001111110000001111110011001100000011"
 	fmt.Println("Bits to Morse:", bitsToMorse(bits))
 
